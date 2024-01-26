@@ -5,7 +5,7 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
-  release-please:
+  build:
     runs-on: ubuntu-latest
     steps:
       # Setup node
@@ -16,8 +16,23 @@ jobs:
       # Install dependencies and build
       - run: |
           mkdir icqq-build
-          git clone https://github.com/icqqjs/icqq -b dev
-          cd icqq
-          npm install
-          npm run build
-          ls ./lib
+          git clone https://github.com/icqqjs/icqq -b dev .
+          npm install && npm run build
+          mv lib icqq
+          zip -r icqq-build.zip icqq
+          cd ../
+          mv ./icqq-build/icqq-build.zip icqq-build.zip && ls ./
+
+      - name: Create Release and Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: Workflow-${{ github.run_number }}
+          files: |
+            icqq-build.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: icqq-dev
+          path: ./icqq-build/icqq
+          retention-days: 3
