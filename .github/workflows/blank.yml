@@ -20,4 +20,4 @@ jobs:
           cd icqq
           npm install
           npm run build
-          ls .
+          ls ./lib
