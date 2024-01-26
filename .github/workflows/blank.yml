@@ -15,7 +15,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       # Install dependencies and build
       - run: |
-          mkdir icqq-build
+          mkdir icqq-build && cd icqq-build
           git clone https://github.com/icqqjs/icqq -b dev .
           npm install && npm run build
           mv lib icqq
