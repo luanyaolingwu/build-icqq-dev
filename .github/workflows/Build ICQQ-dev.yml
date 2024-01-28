@@ -35,4 +35,4 @@ jobs:
         with:
           name: icqq-dev
           path: ./icqq-build/icqq
-          retention-days: 3
+          retention-days: 30
